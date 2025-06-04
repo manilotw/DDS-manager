@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Kind, Status, Category, Transaction
+from .models import Kind, Status, Category, SubCategory, Transaction
 
 @admin.register(Kind)
 class KindAdmin(admin.ModelAdmin):
@@ -13,8 +13,14 @@ class StatusAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'parent')
-    list_filter = ('parent',)
+    list_display = ('title', 'kind')
+    list_filter = ('kind',)
+    search_fields = ('title',)
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category')
+    list_filter = ('category',)
     search_fields = ('title',)
 
 @admin.register(Transaction)

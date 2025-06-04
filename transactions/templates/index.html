@@ -33,27 +33,27 @@
         <div class="row g-3">
           <div class="col-md-3">
             <label for="filter-date-start" class="form-label">Дата с</label>
-            <input type="date" id="filter-date-start" class="form-control" disabled />
+            <input type="date" id="filter-date-start" class="form-control" />
           </div>
           <div class="col-md-3">
             <label for="filter-date-end" class="form-label">Дата по</label>
-            <input type="date" id="filter-date-end" class="form-control" disabled />
+            <input type="date" id="filter-date-end" class="form-control" />
           </div>
           <div class="col-md-2">
             <label for="filter-status" class="form-label">Статус</label>
-            <select id="filter-status" class="form-select" disabled>
+            <select id="filter-status" class="form-select">
               <option>Все</option>
             </select>
           </div>
           <div class="col-md-2">
             <label for="filter-kind" class="form-label">Тип</label>
-            <select id="filter-kind" class="form-select" disabled>
+            <select id="filter-kind" class="form-select">
               <option>Все</option>
             </select>
           </div>
           <div class="col-md-2">
             <label for="filter-category" class="form-label">Категория</label>
-            <select id="filter-category" class="form-select" disabled>
+            <select id="filter-category" class="form-select">
               <option>Все</option>
             </select>
           </div>
@@ -78,32 +78,21 @@
           </tr>
         </thead>
         <tbody>
+        {% for transaction in transactions %}
           <tr>
-            <td>01.01.2025</td>
-            <td>Бизнес</td>
-            <td>Пополнение</td>
-            <td>Инфраструктура</td>
-            <td>VPS</td>
-            <td>1000</td>
-            <td>Пример комментария</td>
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.status }}</td>
+            <td>{{ transaction.kind }}</td>
+            <td>{{ transaction.category }}</td>
+            <td>{{ transaction.subcategories }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.comment }}</td>
             <td>
-              <button class="btn btn-sm btn-primary" disabled>Редактировать</button>
-              <button class="btn btn-sm btn-danger" disabled>Удалить</button>
+              <button class="btn btn-sm btn-primary">Редактировать</button>
+              <button class="btn btn-sm btn-danger">Удалить</button>
             </td>
           </tr>
-          <tr>
-            <td>02.01.2025</td>
-            <td>Личное</td>
-            <td>Списание</td>
-            <td>Маркетинг</td>
-            <td>Avito</td>
-            <td>500</td>
-            <td>Тестовая запись</td>
-            <td>
-              <button class="btn btn-sm btn-primary" disabled>Редактировать</button>
-              <button class="btn btn-sm btn-danger" disabled>Удалить</button>
-            </td>
-          </tr>
+          {% endfor %}
           <!-- Добавляй свои записи сюда -->
         </tbody>
       </table>
