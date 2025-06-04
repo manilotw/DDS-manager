@@ -30,7 +30,7 @@ class Transaction(models.Model):
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     kind = models.ForeignKey(Kind, on_delete=models.PROTECT, null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=False, blank=False)
-    amount = models.IntegerField(blank=False, null=False)
+    amount = models.DecimalField(decimal_places=2, blank=False, null=False)
     comment = models.TextField(blank=True, null=True)
 
     def __str__(self):
