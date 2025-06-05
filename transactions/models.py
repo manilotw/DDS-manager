@@ -15,7 +15,9 @@ class Status(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=100)
     kind = models.ForeignKey(Kind, on_delete=models.PROTECT, related_name='categories')
-
+    
+    def __str__(self):
+        return self.title
 
 class SubCategory(models.Model):
     title = models.CharField(max_length=100)
