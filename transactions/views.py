@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse
 from .models import Transaction, Category, Status, Kind, SubCategory
@@ -39,4 +39,25 @@ def form(request):
         'categories': categories,
         'statuses': statuses,
         'kinds': kinds,
+        })
+
+def delete_transaction(request, pk):
+    transaction = get_object_or_404(Transaction, pk=pk)
+    transaction.delete()
+    return redirect('home')
+
+def edit(request, pk):
+    transaction = get_object_or_404(Transaction, pk=pk)
+
+    subcats = SubCategory.objects.all()
+    categories = Category.objects.all()
+    statuses = Status.objects.all()
+    kinds = Kind.objects.all()
+
+    return render(request, 'edit.html',{
+        'transaction': transaction,
+        'categories': categories,
+        'statuses': statuses,
+        'kinds': kinds,
+        'subcats': subcats,
         })
