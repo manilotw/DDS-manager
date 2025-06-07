@@ -13,56 +13,57 @@
   <main class="container">
     <h1 class="mb-4">Создать / Редактировать запись (заглушка)</h1>
 
-    <form>
+    <form method="post" action="{% url 'edit' transaction.id %}">
+      {% csrf_token %}
       <div class="mb-3">
         <label for="record-date" class="form-label">Дата создания записи</label>
-        <input type="date" class="form-control" id="record-date" value="2025-01-01" />
+        <input type="date" class="form-control" id="record-date" name="record_date" value="{{ transaction.date|date:'Y-m-d' }}" /> 
       </div>
 
       <div class="mb-3">
         <label for="record-status" class="form-label">Статус</label>
-        <select id="record-status" class="form-select">
+        <select id="record-status" name="record_status" class="form-select">
         {% for status in statuses %}
-          <option>{{ status }}</option>
+          <option value="{{ status.id }}" {% if transaction.status.id == status.id %}selected{% endif %}>{{ status }}</option>
         {% endfor %}
         </select>
       </div>
 
       <div class="mb-3">
         <label for="record-type" class="form-label">Тип</label>
-        <select id="record-category" class="form-select">
+        <select id="record-type" name="record_type" class="form-select">
         {% for kind in kinds %}
-          <option>{{ kind }}</option>
+          <option value="{{ kind.id }}" {% if kind == transaction.kind %}selected{% endif %}>{{ kind.title }}</option>
         {% endfor %}
         </select>
       </div>
 
       <div class="mb-3">
         <label for="record-category" class="form-label">Категория</label>
-        <select id="record-category" class="form-select">
+        <select name="record_category" id="record-category" class="form-select">
         {% for category in categories %}
-          <option>{{ category }}</option>
+          <option value="{{ category.id }}" {% if category == transaction.category %}selected{% endif %}>{{ category }}</option>
         {% endfor %}
         </select>
       </div>
 
       <div class="mb-3">
         <label for="record-subcategory" class="form-label">Подкатегория</label>
-        <select id="record-subcategory" class="form-select">
+        <select id="record-subcategory" name="record_subcategory" class="form-select">
         {% for subcat in subcats %}
-          <option>{{ subcat }}</option>
+          <option value="{{ subcat.id }}" {% if subcat == transaction.subcategory %}selected{% endif %}>{{ subcat }}</option>
         {% endfor %}
         </select>
       </div>
 
       <div class="mb-3">
         <label for="record-amount" class="form-label">Сумма (₽)</label>
-        <input type="number" class="form-control" id="record-amount" placeholder="Введите сумму" />
+        <input type="number" name="record_amount" value="{{ transaction.amount }}" />
       </div>
 
       <div class="mb-3">
         <label for="record-comment" class="form-label">Комментарий</label>
-        <textarea class="form-control" id="record-comment" rows="3"></textarea>
+        <textarea name="record_comment">{{ transaction.comment }}</textarea>
       </div>
 
       <button type="submit" class="btn btn-primary">Сохранить</button>

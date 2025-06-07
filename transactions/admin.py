@@ -19,8 +19,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category')
-    list_filter = ('category',)
+    # list_display = ('title', 'category')
+    # list_filter = ('category',)
     search_fields = ('title',)
 
 @admin.register(Transaction)

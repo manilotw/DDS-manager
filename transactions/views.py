@@ -47,17 +47,30 @@ def delete_transaction(request, pk):
     return redirect('home')
 
 def edit(request, pk):
-    transaction = get_object_or_404(Transaction, pk=pk)
+    transaction = get_object_or_404(Transaction, id=pk)
 
-    subcats = SubCategory.objects.all()
-    categories = Category.objects.all()
+    if request.method == 'POST':
+        transaction.date = request.POST.get('record_date')
+        transaction.status = Status.objects.get(id=request.POST.get('record_status'))
+        transaction.kind = Kind.objects.get(id=request.POST.get('record_type'))
+        transaction.category = Category.objects.get(id=request.POST.get('record_category'))
+        subcategory_id = request.POST.get('record_subcategory')
+        subcategory = SubCategory.objects.get(id=subcategory_id)
+        transaction.category.subcategories.set([subcategory])  
+        transaction.amount = request.POST.get('record_amount')
+        transaction.comment = request.POST.get('record_comment')
+        transaction.save()
+        return redirect('home')
+
     statuses = Status.objects.all()
-    kinds = Kind.objects.all()
+    kinds = Kind.objects.all()  
+    categories = Category.objects.all()
+    subcats = SubCategory.objects.all()
 
-    return render(request, 'edit.html',{
+    return render(request, 'edit.html', {
         'transaction': transaction,
-        'categories': categories,
         'statuses': statuses,
         'kinds': kinds,
-        'subcats': subcats,
-        })
+        'categories': categories,
+        'subcats': subcats
+    })
