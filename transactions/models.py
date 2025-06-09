@@ -23,7 +23,6 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     title = models.CharField(max_length=100)
-    # category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='subcategories')
 
     def __str__(self):
         return self.title
@@ -35,8 +34,7 @@ class Transaction(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=False, blank=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False)
     comment = models.TextField(blank=True, null=True)
-    # subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name='subcat')
-
+    
     def __str__(self):
         return f'{self.amount} - {self.comment}'
 
