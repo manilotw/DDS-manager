@@ -17,6 +17,20 @@ def index(request):
         })
 
 def create(request):
+    if request.method == 'POST':
+        data = request.POST.dict()
+
+        Transaction.objects.create(
+            date=data.get('record_date'),
+            status=Status.objects.get(id=data.get('record_status')),
+            kind=Kind.objects.get(id=data.get('record_type')),
+            category=Category.objects.get(id=data.get('record_category')),
+            amount=data.get('record_amount'),
+            comment=data.get('record_comment')
+        )
+
+        return redirect('home')
+
     subcats = SubCategory.objects.all()
     categories = Category.objects.all()
     statuses = Status.objects.all()
@@ -74,3 +88,4 @@ def edit(request, pk):
         'categories': categories,
         'subcats': subcats
     })
+
