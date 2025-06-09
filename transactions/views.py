@@ -4,7 +4,26 @@ from django.http import HttpResponse
 from .models import Transaction, Category, Status, Kind, SubCategory
   
 def index(request):
+
     transactions = Transaction.objects.all()
+
+    date_start = request.GET.get('date_start')
+    date_end = request.GET.get('date_end')
+    status = request.GET.get('status')
+    kind = request.GET.get('kind')
+    category = request.GET.get('category')
+
+    if date_start:
+        transactions = transactions.filter(date__gte=date_start)
+    if date_end:
+        transactions = transactions.filter(date__lte=date_end)
+    if status and status != 'Все':
+        transactions = transactions.filter(status_id=status)
+    if kind and kind != 'Все':
+        transactions = transactions.filter(kind_id=kind)
+    if category and category != 'Все':
+        transactions = transactions.filter(category_id=category)
+
     categories = Category.objects.all()
     statuses = Status.objects.all()
     kinds = Kind.objects.all()
